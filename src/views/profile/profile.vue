@@ -1,7 +1,11 @@
 <template>
   <div class="profile-container">
     <!-- Loading State -->
-    <div v-if="loading" class="loading">Loading profile...</div>
+    <div v-if="loading" class="loading">
+        <div class="spinner-border text-primary text-center" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+    </div>
     
     <!-- Profile Content -->
     <div v-else>
@@ -138,6 +142,15 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.spinneres{
+  margin-left:40rem;
+  margin-top: 4rem;
+}
 
 .profile-container {
   max-width: 800px;

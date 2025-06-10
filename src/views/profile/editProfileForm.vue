@@ -94,6 +94,7 @@
             v-model="formData.number"
             @blur="validateField('number')"
             @input="formatPhoneNumber"
+            @keydown="preventInvalidChars"
             maxlength="10"
             :invalid="!!errors.number && touched.number"
           />
@@ -112,6 +113,9 @@
 <script setup>
 import { ref, watch } from 'vue';
 import * as yup from 'yup';
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 const props = defineProps({
   visible: {
@@ -137,6 +141,12 @@ const touched = ref({
   gender: false,
   number: false
 });
+
+const preventInvalidChars = (e) => {
+  if (['e', 'E', '+', '-'].includes(e.key)) {
+    e.preventDefault();
+  }
+};
 
 // Validation schema
 const schema = yup.object().shape({
@@ -187,6 +197,7 @@ const handleSubmit = async () => {
   const isValid = await validateForm();
   if (isValid) {
     emit('save', formData.value);
+    toast.success("Profile Edit Successfull")
   }
 };
 
