@@ -43,7 +43,7 @@ import IncomeCard from './IncomeCard.vue'
 import ExpenseCard from './ExpenseCard.vue'
 import CChartBarExample from './CChartBarExample.vue'
 </script>
-<style>
+<style scoped>
 h1{
   text-align: center;
   color: #5E5CD0;

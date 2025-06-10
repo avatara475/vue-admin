@@ -28,6 +28,7 @@
     "@firebase/auth": "^1.10.6",
     "@popperjs/core": "^2.11.8",
     "chart.js": "^4.4.7",
+    "dotenv": "^16.5.0",
     "firebase": "^11.9.0",
     "pinia": "^3.0.3",
     "simplebar-vue": "^2.4.0",

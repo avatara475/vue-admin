@@ -299,7 +299,7 @@ const handleClose = () => {
 };
 </script>
 
-<style>
+<style scoped>
 .error{
   text-align: center;
 }

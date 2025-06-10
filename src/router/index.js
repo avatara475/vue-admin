@@ -298,7 +298,12 @@ const routes = [
       component: () => import('@/views/newSalary/newSalary'),
        meta: { requiresAuth: true },
     },
-
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: () => import('@/views/profile/profile.vue'),
+       meta: { requiresAuth: true },
+    },
     ],
   },
   {

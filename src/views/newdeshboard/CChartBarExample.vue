@@ -145,7 +145,7 @@ const chartData = computed(() => {
   />
 </template>
 
-<style>
+<style scoped>
 .form-select {
   display: inline-block;
   margin-left: 10px;

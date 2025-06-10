@@ -276,7 +276,7 @@ const clearSearch = () => {
 onMounted(() => fetchSalary());
 </script>
 
-<style>
+<style scoped>
 h2 {
   text-align: center;
   color: #5E5CD0;

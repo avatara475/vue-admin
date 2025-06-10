@@ -102,7 +102,7 @@
   :data="{
     labels: monthNames,
     datasets: [{
-      label: 'Expenses',
+      label: 'Salary',
       backgroundColor: 'transparent',
       borderColor: 'rgba(255,255,255,.55)',
       pointBackgroundColor: 'rgba(255,255,255,.55)',

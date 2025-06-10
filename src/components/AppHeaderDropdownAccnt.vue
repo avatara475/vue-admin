@@ -68,6 +68,7 @@ const itemsCount = 42
       </CDropdownItem>
       <CDropdownDivider />
       <CDropdownItem> <CIcon icon="cil-shield-alt" /> Lock Account </CDropdownItem> -->
+      <CDropdownItem @click="router.push('/profile')" class="logins"> <CIcon icon="cil-user" /> Profile </CDropdownItem>
       <CDropdownItem @click="handleLogout"  class="logins"> <CIcon icon="cil-lock-locked" /> Logout </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>

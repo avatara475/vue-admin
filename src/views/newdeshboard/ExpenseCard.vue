@@ -206,7 +206,7 @@ onMounted(() => {
 });
 </script>
 
-<style>
+<style scoped>
 /* Custom styling to match the widget stats look */
 .card {
   border-radius: 0.375rem;
