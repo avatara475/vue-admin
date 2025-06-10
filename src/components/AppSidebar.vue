@@ -18,14 +18,15 @@ const sidebar = useSidebarStore()
     @visible-change="(value) => sidebar.toggleVisible(value)"
   >
     <CSidebarHeader class="border-bottom">
-      
+      <router-link to="/">
         <img 
-          src="../assets/brand/images.png" 
+          src="../assets/brand/images-removebg-preview.png" 
           alt="CoreUI Logo" 
           class="sidebar-brand-full" 
           width="150"
+          style="background: transparent;"
         />
-    
+    </router-link>
       <CCloseButton class="d-lg-none" dark @click="sidebar.toggleVisible()" />
     </CSidebarHeader>
     <AppSidebarNav />
@@ -34,3 +35,8 @@ const sidebar = useSidebarStore()
     </CSidebarFooter>
   </CSidebar>
 </template>
+<style scoped>
+.sidebar-brand-full {
+  background: transparent !important;
+}
+</style>

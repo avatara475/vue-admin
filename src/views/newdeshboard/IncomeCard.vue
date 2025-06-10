@@ -35,7 +35,7 @@
         </span>
       </div>
       
-      <CChart
+      <!-- <CChart
         type="line"
         class="mt-3 mx-3"
         style="height: 70px"
@@ -94,7 +94,42 @@
             },
           },
         }"
-      />
+      /> -->
+       <CChart
+  type="line"
+  class="mt-3 mx-3"
+  style="height: 70px"
+  :data="{
+    labels: monthNames,
+    datasets: [{
+      label: 'Expenses',
+      backgroundColor: 'transparent',
+      borderColor: 'rgba(255,255,255,.55)',
+      pointBackgroundColor: 'rgba(255,255,255,.55)',
+      data: salaryByMonth,
+    }],
+  }"
+  :options="{
+    plugins: { legend: { display: false } },
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        border: { display: false },
+        grid: { display: false },
+        ticks: { display: false },
+      },
+      y: {
+        display: false,
+        grid: { display: false },
+        ticks: { display: false },
+      },
+    },
+    elements: {
+      line: { borderWidth: 1, tension: 0.4 },
+      point: { radius: 4, hitRadius: 10, hoverRadius: 4 },
+    },
+  }"
+/>
     </CCardBody>
   </CCard>
 </template>
@@ -115,6 +150,26 @@ import CIcon from '@coreui/icons-vue';
 
 const salary = ref([]);
 const loading = ref(true);
+
+const monthNames = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+// Calculate expenses grouped by month name (ignoring year)
+const salaryByMonth = computed(() => {
+  const monthlyTotals = Array(12).fill(0); // 12 months
+
+  salary.value.forEach(salaryes => {
+    if (salaryes.date) {
+      const dateObj = new Date(salaryes.date);
+      const monthIndex = dateObj.getMonth(); // 0-11
+      monthlyTotals[monthIndex] += Number(salaryes.amount) || 0;
+    }
+  });
+
+  return monthlyTotals;
+});
 
 // Get current month in YYYY-MM format
 const currentMonth = computed(() => {

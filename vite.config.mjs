@@ -14,6 +14,9 @@ export default defineConfig(() => {
         ],
       },
     },
+    define: {
+    'process.env': {}
+  },
     resolve: {
       alias: [
         // webpack path resolve to vitejs
