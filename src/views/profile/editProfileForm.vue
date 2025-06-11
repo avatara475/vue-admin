@@ -101,6 +101,21 @@
           <CFormFeedback invalid>{{ errors.number }}</CFormFeedback>
         </div>
 
+        <!-- Image Upload Field -->
+        <div class="mb-3">
+          <CFormLabel>Profile Image</CFormLabel>
+          <CFormInput
+            type="file"
+            accept="image/*"
+            @change="handleImageUpload"
+            :invalid="!!errors.image && touched.image"
+          />
+          <CFormFeedback invalid>{{ errors.image }}</CFormFeedback>
+          <div v-if="formData.image" class="mt-2">
+            <img :src="formData.image" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+          </div>
+        </div>
+
         <CModalFooter>
           <CButton color="secondary" @click="handleCancel">Cancel</CButton>
           <CButton color="primary" type="submit">Save Changes</CButton>
@@ -131,7 +146,10 @@ const props = defineProps({
 const emit = defineEmits(['save', 'cancel']);
 
 // Form data and states
-const formData = ref({ ...props.userData });
+const formData = ref({ 
+  ...props.userData,
+  image: props.userData.image || '' // Initialize image field
+});
 const errors = ref({});
 const touched = ref({
   name: false,
@@ -139,7 +157,8 @@ const touched = ref({
   bio: false,
   birth: false,
   gender: false,
-  number: false
+  number: false,
+  image: false
 });
 
 const preventInvalidChars = (e) => {
@@ -157,8 +176,33 @@ const schema = yup.object().shape({
   gender: yup.string().required('Please select a gender'),
   number: yup.string()
     .required('Mobile number is required')
-    .matches(/^\d{10}$/, 'Mobile number must be 10 digits')
+    .matches(/^\d{10}$/, 'Mobile number must be 10 digits'),
+  image: yup.string()
+    .test('is-valid-image', 'Please upload a valid image', (value) => {
+      // Image is optional, but if provided should be a valid base64 string
+      if (!value) return true;
+      return value.startsWith('data:image/');
+    })
 });
+
+// Handle image upload and convert to base64
+const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.match('image.*')) {
+    errors.value.image = 'Please select an image file';
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    formData.value.image = e.target.result;
+    errors.value.image = '';
+    touched.value.image = true;
+  };
+  reader.readAsDataURL(file);
+};
 
 // Format phone number input
 const formatPhoneNumber = (e) => {
@@ -209,7 +253,10 @@ const handleCancel = () => {
 };
 
 watch(() => props.userData, (newVal) => {
-  formData.value = { ...newVal };
+  formData.value = { 
+    ...newVal,
+    image: newVal.image || '' // Ensure image field is properly initialized
+  };
 }, { deep: true });
 </script>
 

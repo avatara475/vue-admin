@@ -1,13 +1,41 @@
 <script setup>
-import avatar from '@/assets/images/avatars/8.jpg'
+import { ref, onMounted, watch } from 'vue'
 import { auth } from '@/firebase'
 import { signOut } from 'firebase/auth'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-
+import { getDatabase, ref as dbRef, onValue } from 'firebase/database'
 
 const router = useRouter()
 const toast = useToast()
+const db = getDatabase()
+const userAvatar = ref('')
+
+// Fetch user profile image from Firebase
+const fetchUserProfileImage = () => {
+  const user = auth.currentUser
+  if (!user) return
+  
+  const userId = user.uid
+  const userRef = dbRef(db, `users/${userId}`)
+  
+  // Remove onlyOnce to get real-time updates
+  onValue(userRef, (snapshot) => {
+    const userData = snapshot.val()
+    if (userData && userData.image) {
+      userAvatar.value = userData.image
+    } else {
+      // Fallback to gender-based avatar or default
+      userAvatar.value = userData?.gender === 'female' 
+        ? 'https://randomuser.me/api/portraits/lego/9.jpg' 
+        : 'https://randomuser.me/api/portraits/lego/5.jpg'
+    }
+  })
+}
+
+onMounted(() => {
+  fetchUserProfileImage()
+})
 
 const handleLogout = async () => {
   try {
@@ -19,13 +47,17 @@ const handleLogout = async () => {
   }
 }
 
+
 const itemsCount = 42
 </script>
 
 <template>
   <CDropdown placement="bottom-end" variant="nav-item">
     <CDropdownToggle class="py-0 pe-0" :caret="false">
-      <CAvatar :src="avatar" size="md" />
+      <CAvatar 
+      :src="userAvatar" 
+      size="md" 
+      class="rounded"/>
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
       <CDropdownHeader

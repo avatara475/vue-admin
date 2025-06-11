@@ -16,7 +16,7 @@
       <div class="profile-header">
         <div class="avatar-container">
           <img 
-            :src="userData.gender === 'male' ? 'https://randomuser.me/api/portraits/lego/5.jpg' : 'https://randomuser.me/api/portraits/lego/9.jpg'"
+            :src="userData.image?userData.image:userData.gender === 'male' ? 'https://randomuser.me/api/portraits/lego/5.jpg' : 'https://randomuser.me/api/portraits/lego/9.jpg'"
             alt="Profile" 
             class="avatar"
             >
