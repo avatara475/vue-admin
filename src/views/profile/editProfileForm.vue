@@ -72,6 +72,7 @@
               value="male"
               v-model="formData.gender"
               @change="validateField('gender')"
+              checked
             />
             <CFormCheck
               type="radio"
